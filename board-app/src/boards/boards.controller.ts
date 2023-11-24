@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { BoardsService } from './boards.service';
+import { Board } from './boards.model';
 
 // nest g controller boards --no-spec
 // --no-spec : 테스트를 위한 소스코드 생성x
@@ -18,6 +19,19 @@ export class BoardsController {
   // constructor(private boardsService: BoardsService){
   //     this.boardsService.getAllBoards()
   // }
+
+  @Get('/')
+  getList(): Board[] {
+    return this.boardsService.getList();
+  }
+
+  @Post('/create')
+  createBoard(
+    @Body('title') title: string,
+    @Body('content') content: string,
+  ): Board {
+    return this.boardsService.createBoard(title, content);
+  }
 }
 
 // providers 란?

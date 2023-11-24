@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Board } from './boards.model';
+import { randomUUID } from 'crypto';
 
 // service 란?
 // 소프트웨어 개발내의 공통 개념.
@@ -8,4 +10,20 @@ import { Injectable } from '@nestjs/common';
 // nest g service boards --no-spec
 
 @Injectable()
-export class BoardsService {}
+export class BoardsService {
+  private boards: Board[] = [];
+
+  getList(): Board[] {
+    return this.boards;
+  }
+
+  createBoard(title: string, content: string) {
+    const board: Board = {
+      id: Math.random(),
+      title,
+      content,
+    };
+    this.boards.push(board);
+    return board;
+  }
+}
