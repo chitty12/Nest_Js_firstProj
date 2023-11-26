@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Board } from './boards.model';
-import { randomUUID } from 'crypto';
+import { CreateBoardDto } from './dto/create-board.dto';
+
 
 // service 란?
 // 소프트웨어 개발내의 공통 개념.
@@ -17,7 +18,13 @@ export class BoardsService {
     return this.boards;
   }
 
-  createBoard(title: string, content: string) {
+  // createBoard(title: string, content: string) {
+    createBoard(createBoardDto: CreateBoardDto) {
+      // const title = createBoardDto.title;
+      // const content = createBoardDto.content;
+
+      const {title, content} = createBoardDto;
+
     const board: Board = {
       id: Math.random(),
       title,
