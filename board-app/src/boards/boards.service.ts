@@ -38,4 +38,10 @@ export class BoardsService {
   getBoardById(id: number): Board {
     return this.boards.find((board) => board.id === id)
   }
+
+  deleteBoard(id:number): void {
+    this.boards = this.boards.filter((board) => board.id !== id)
+  }
+
+  
 }
