@@ -1,7 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Board } from './boards.model';
+// import { Board } from './boards.model';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { randomUUID } from 'crypto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Board } from './board.entity';
+import { Repository } from 'typeorm';
 
 // service 란?
 // 소프트웨어 개발내의 공통 개념.
@@ -12,7 +15,16 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class BoardsService {
+  constructor(
+    @InjectRepository(Board)
+    private boardRepository: Repository<Board>,
+  ) {}
+
   private boards: Board[] = [];
+
+  async create(createBoardDto: CreateBoardDto) {
+    return await this.boardRepository.save(createBoardDto);
+  }
 
   getList(): Board[] {
     return this.boards;
