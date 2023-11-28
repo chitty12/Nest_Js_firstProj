@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { BoardsModule } from './boards/boards.module';
+import { BoardsController } from './boards/boards.controller';
 
 // root module 에 해당함.
 // 모듈: @ module {} 데코레이터로 주석이 달린 클래스.
