@@ -1,5 +1,5 @@
 export interface Board {
   title: string;
-  id: number;
+  id: string;
   content: string;
 }

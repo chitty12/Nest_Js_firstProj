@@ -1,7 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { Board } from './boards.model';
+import { Injectable, NotFoundException } from '@nestjs/common';
+// import { Board } from './boards.model';
 import { CreateBoardDto } from './dto/create-board.dto';
-
+import { randomUUID } from 'crypto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Board } from './board.entity';
+import { Repository } from 'typeorm';
 
 // service 란?
 // 소프트웨어 개발내의 공통 개념.
@@ -12,21 +15,30 @@ import { CreateBoardDto } from './dto/create-board.dto';
 
 @Injectable()
 export class BoardsService {
+  constructor(
+    @InjectRepository(Board)
+    private boardRepository: Repository<Board>,
+  ) {}
+
   private boards: Board[] = [];
+
+  async create(createBoardDto: CreateBoardDto) {
+    return await this.boardRepository.save(createBoardDto);
+  }
 
   getList(): Board[] {
     return this.boards;
   }
 
   // createBoard(title: string, content: string) {
-    createBoard(createBoardDto: CreateBoardDto) {
-      // const title = createBoardDto.title;
-      // const content = createBoardDto.content;
+  createBoard(createBoardDto: CreateBoardDto) {
+    // const title = createBoardDto.title;
+    // const content = createBoardDto.content;
 
-      const {title, content} = createBoardDto;
+    const { title, content } = createBoardDto;
 
     const board: Board = {
-      id: Math.random(),
+      id: randomUUID(),
       title,
       content,
     };
@@ -34,17 +46,32 @@ export class BoardsService {
     return board;
   }
 
+  getBoardById(id: string): Board {
+    const found = this.boards.find((board) => board.id === id);
 
-  getBoardById(id: number): Board {
-    return this.boards.find((board) => board.id === id)
+    if (!found) {
+      throw new NotFoundException(`Can't find Board with id ${id}`);
+    }
+
+    return found;
   }
 
-  deleteBoard(id:number): void {
-    this.boards = this.boards.filter((board) => board.id !== id)
+  deleteBoard(id: string): void {
+    const found = this.getBoardById(id);
+    this.boards = this.boards.filter((board) => board.id !== id);
+
+    if (!found) {
+      throw new NotFoundException();
+    }
   }
 
-  
+  updateBoardContent(id: string, content: string): Board {
+    const board = this.getBoardById(id);
+    board.content = content;
+    return board;
+  }
 }
+
 
 
 // pipe는 @Injectable() 데코레이터로 주석이 달린 클래스.
@@ -54,3 +81,7 @@ export class BoardsService {
 // - 라우트 핸들러가 처리하는 인수에 대해 작동
 // - 메소드를 바로 직전에 작동해서 메소드로 향하는 인수에 대해 변환할 것이 있으면 변환하고 유효성 체크를 위해서도 호출
 // - 사용법 : Handler-level pipes, Parameter-level pipes, Global-level pipes
+
+// pipe 필요 모듈
+// class-validator, class-transformer (npm i class-validator class-transformer --save)
+
