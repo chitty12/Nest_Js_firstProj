@@ -63,7 +63,7 @@ export class BoardsController {
   updatedBoardContent(
     @Param('id') id: string,
     @Body('content', BoardStatusValidationPipe) content: string,
-  ): Board {
+  ) {
     return this.boardsService.updateBoardContent(id, content);
   }
 }

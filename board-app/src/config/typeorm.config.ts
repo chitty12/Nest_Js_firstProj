@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { Board } from 'src/boards/board.entity';
 
 export const typeORMConfig: TypeOrmModuleOptions = {
   migrations: [__dirname + '/migrations/**/*{ts,.js}'],
@@ -11,7 +12,7 @@ export const typeORMConfig: TypeOrmModuleOptions = {
   password: 'nestUser12!@',
   database: 'nest',
 
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  entities: [Board],
 
   synchronize: false,
   // 객체와 테이블 동기화할 때.
