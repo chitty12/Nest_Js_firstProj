@@ -53,6 +53,8 @@ export class AuthService {
 // Verify Signature(토큰이 보낸 사람에 의해 서명되어, 변경되지 않았는지 확인하는데 사용되는 서명<사용자가 설정한 Secret Key 포함>)
 // client 요청의 headers, payload 와 서버의 secret key 를 이용해 signature 생성.
 
+// 토큰을 가지고 요청을 보낼 때 서버에서는 유효 체크 => 유효하다면 payload의 정보가 DB에 있는지 체크 => 있다면 해당 유저객체를 DB에서 가져옴.
+
 // 해시 함수 : 임의의 길이의 데이터를 고정된 길이의 데이터로 매핑하는 함수
 // 원래의 데이터(key) => 해시 함수를 수행한 결과값(hash value)  :  hashing 하다
 // hash collision : 서로 다른 두 개의 키가 같은 해시값을 가지는 경우.
