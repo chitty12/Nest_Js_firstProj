@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { type } from 'os';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Auth } from './auth.entity';
 
 @Entity()
 export class Board {
@@ -10,4 +18,7 @@ export class Board {
 
   @Column()
   content: string;
+
+  @ManyToOne((type) => Auth, (user) => user.boards, { eager: false })
+  user: Auth;
 }
