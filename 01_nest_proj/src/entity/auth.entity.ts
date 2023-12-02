@@ -10,5 +10,5 @@ export class Auth {
   userName: string;
 
   @Column()
-  password: number;
+  password: string;
 }

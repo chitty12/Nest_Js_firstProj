@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
 import { Auth } from 'src/entity/auth.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { Repository } from 'typeorm';
 
 @Module({
   imports: [
