@@ -15,7 +15,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(AuthCredentialsDto: AuthCredentialsDto) {
+  async signUp(AuthCredentialsDto: AuthCredentialsDto): Promise<string> {
     const { userName, password } = AuthCredentialsDto;
 
     const salt = await bcrypt.genSalt();
@@ -26,7 +26,7 @@ export class AuthService {
       password: hashedPw,
     });
 
-    return;
+    return 'signUP success!';
   }
 
   async signIn(
