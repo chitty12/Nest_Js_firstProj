@@ -9,6 +9,8 @@ import {
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/AuthCredentials.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from './get-user.decorator';
+import { Auth } from 'src/entity/auth.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -30,8 +32,12 @@ export class AuthController {
   @UseGuards(AuthGuard())
   // jwt.strategy 내의 validate 메소드에서 return user를 이용해 요청값에 user객체를 넣어주기위한 방법
   // 없으면 req에 user 정보가 안담겨있음.
-  test(@Req() req) {
-    console.log('req', req);
+  // test(@Req() req) {
+  // console.log('req', req);
+
+  // 커스텀 데코레이션인 GetUser 사용하는 방법
+  test(@GetUser() user: Auth) {
+    console.log('req', user);
   }
 }
 
