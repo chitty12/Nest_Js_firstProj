@@ -9,6 +9,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create_board.dto';
@@ -19,6 +20,7 @@ import { Auth } from 'src/entity/auth.entity';
 @Controller('board')
 @UseGuards(AuthGuard())
 export class BoardController {
+  private logger = new Logger('BoardsController');
   constructor(private boardService: BoardService) {}
 
   @Get('/')
@@ -42,6 +44,7 @@ export class BoardController {
     @Param('id', ParseIntPipe) id,
     @GetUser() user: Auth,
   ): Promise<void> {
+    this.logger.verbose(`User ${user.userName} trying to delete boards!`);
     // ParseIntPipe : 파라미터가 int타입인지 여부를 체크 (아닐경우 에러)
     return this.boardService.deleteBoard(id, user);
   }
