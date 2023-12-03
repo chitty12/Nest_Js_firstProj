@@ -61,3 +61,10 @@ export class BoardService {
 // remove() vs delete()
 // remove : 무조건 존재하는 아이템을 삭제. 없으면 에러발생
 // delete : 존재하지 않는 아이템의 경우에는 아무런 영향 없음.
+
+// service 란?
+// 소프트웨어 개발내의 공통 개념.
+// @Injectable 데코레이터로 감싸져서 모듈에 제공되며, 서비스 인스턴스는 애플리케이션 전체에서 사용가능.
+// controller 에서 데이터의 유효성 체크를 하거나 DB에 아이템을 생성하는 등의 작업을 처리.
+
+// nest g service boards --no-spec
